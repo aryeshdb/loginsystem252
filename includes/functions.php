@@ -49,7 +49,7 @@ function login($email, $password, $mysqli) {
    //$select=$mysqli->query($sql);
 
     $sql= pg_exec($mysqli,"select * from members where email='test@example.com';");
-    echo pg_last_error($mysqli);
+    echo "{$sql}";
 
     $count = pg_num_rows($sql);
     echo pg_last_error($mysqli);
