@@ -44,7 +44,7 @@ function sec_session_start() {
 }
 
 function login($email, $password, $mysqli) {
-    echo "{$email} ";
+    echo "{$email}     ";
     // if ($stmt = $mysqli->prepare("SELECT id, username, password, salt FROM members WHERE email = 'test@example.com' LIMIT 1")){
     //     $stmt->execute();    // Execute the prepared query.
     //     $stmt->store_result();
@@ -56,29 +56,30 @@ function login($email, $password, $mysqli) {
     // else{
     //     echo "no  ";
     // }    
-    $sql= "update members set username='testgr3' WHERE email='test@example.com';";
-   $select=$mysqli->query($sql);
+   //  $sql= "update members set username='testgr3' WHERE email='test@example.com';";
+   // $select=$mysqli->query($sql);
 
-    $sql= "select * from members;";
+    $sql= "select username from members;";
     $result=$mysqli->query($sql);
-    echo "hi";
-    echo "hi {$mysqli}";
-    foreach ($mysqli->rows() as $r) {
-        echo "hi ";
-        $a=$r['username'];
-        echo "{$a}";
+    echo "hi      ";
+    while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
+            
+            echo "hiinloop   ";
+            $a=$row['username'];
+            echo "{$a}     ";
     }
 
-if(pg_num_rows($result)>0)
-  {
-    echo "found  ";
-//    return true;
-  }
-    else {
-  echo " not found  ";
-//      
-  //      return false;
-    }  
+
+// if(pg_num_rows($result)>0)
+//   {
+//     echo "found  ";
+// //    return true;
+//   }
+//     else {
+//   echo " not found  ";
+// //      
+//   //      return false;
+//     }  
     exit();
     // Using prepared statements means that SQL injection is not possible. 
     // if ($stmt = $mysqli->prepare("SELECT id, username, password, salt 
