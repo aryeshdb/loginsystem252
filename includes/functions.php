@@ -48,9 +48,9 @@ function login($email, $password, $mysqli) {
     $sql= "update members set username='testgr' WHERE email='test@example.com'";
    $select=$mysqli->query($sql);
 
-    $sql= "SELECT * FROM members WHERE email='test@example.com'";
+    $sql= "select * from members where email='test@example.com'";
      $select=$mysqli->query($sql);
-  if(mysqli_num_rows($select)>0)
+  if(pg_num_rows($select)>0)
   {
     echo "found  ";
 //    return true;
