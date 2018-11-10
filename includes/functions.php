@@ -50,7 +50,7 @@ function login($email, $password, $mysqli) {
 
     $sql= "select * from members where email='test@example.com';";
 $result=$mysqli->query($sql);
-    
+    echo "hi ";
     foreach ($mysqli->rows() as $r) {
         echo "hi ";
         $a=$r['username'];
