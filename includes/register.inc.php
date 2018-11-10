@@ -101,7 +101,7 @@ if (isset($_POST['username'], $_POST['email'], $_POST['p'])) {
         $password = hash('sha512', $password . $random_salt);
         
         // Insert the new user into the database 
-        if (!$mysqli->query("INSERT INTO members (username, email, password, salt) VALUES ('".$user_id."','".$email."','".$password."','".$random_salt."')")) {
+        if (!$mysqli->query("INSERT INTO members (username, email, password, salt) VALUES ('".$username."','".$email."','".$password."','".$random_salt."')")) {
                     header("Location: ../error.php?err=Database error: login_attempts");
                     exit();
         }
