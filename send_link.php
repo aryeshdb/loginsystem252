@@ -26,25 +26,19 @@ if(isset($_POST['submit_email']) && $_POST['email'])
 
     $flag=0;
     while ($row = $select->fetch(\PDO::FETCH_ASSOC)) {
+            $id=($row['id']);
+            $pass=($row['password']);
+            $username=($row['username']);
+            $email=($row['email']);
             $flag=1;
             break;
     }
   if($flag==1)
   {
     
-    // echo  $select;
-    while ($row = $select->fetch(\PDO::FETCH_ASSOC)) {
-      $id=($row['id']);
-      $username=($row['username']);
-      $email=($row['email']);
-      $pass=($row['password']);
-      break;
-    }
-    echo "{$pass}";
     $link="<a href='https://loginsystemcs252.herokuapp.com/reset_pass.php?key=".$email."&reset=".$pass."'>Click To Reset password</a>";
      
-    echo "{$link}";
-    exit();
+   
     require 'vendor/autoload.php';
     $mail = new PHPMailer(TRUE);
     
