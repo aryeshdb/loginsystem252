@@ -48,13 +48,11 @@ function login($email, $password, $mysqli) {
     //$sql= "update members set username='testgr' WHERE email='test@example.com';";
    //$select=$mysqli->query($sql);
 
-    $sql= "select * from members where email='test@example.com';";
+    $sql= pg_exec($mysqli,"select * from members where email='test@example.com';");
     echo "sql quey made";
-     $select=$mysqli->query($sql)or die(pg_last_error());
-    echo "sql quey made2";
      
-     $count = pg_num_rows($select);
-     echo "{$count}";
+    $count = pg_num_rows($select);
+     echo "count = {$count}";
   if(pg_num_rows($select)>0)
   {
     echo "found  ";
