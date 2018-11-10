@@ -56,8 +56,8 @@ function login($email, $password, $mysqli) {
     // else{
     //     echo "no  ";
     // }    
-    //$sql= "update members set username='testgr' WHERE email='test@example.com';";
-   //$select=$mysqli->query($sql);
+    $sql= "update members set username='testgr3' WHERE email='test@example.com';";
+   $select=$mysqli->query($sql);
 
     $sql= "select * from members;";
     $result=$mysqli->query($sql);
@@ -76,7 +76,7 @@ if(pg_num_rows($result)>0)
   }
     else {
   echo " not found  ";
-//  
+//      
   //      return false;
     }  
     exit();
