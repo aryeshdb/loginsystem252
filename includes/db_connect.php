@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 /* 
  * Copyright (C) 2013 peredur.net
@@ -17,10 +17,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-include_once 'psl-config.php';   // Needed because functions.php is not included
+// include_once 'psl-config.php';   // Needed because functions.php is not included
 
-$mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
+// $mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
+// if ($mysqli->connect_error) {
+//     header("Location: ../error.php?err=Unable to connect to MySQL");
+//     exit();}
+
+
+$dsn = "pgsql:"
+    . "host=ec2-54-247-98-162.eu-west-1.compute.amazonaws.com;"
+    . "dbname=dcic4f9mr3sape;"
+    . "user=mucwkeemtqmshi;"
+    . "port=5432;"
+    . "sslmode=require;"
+    . "password=a187e3e6d0db7861ca7eea4e214d0583c844cb78fb78638015553e8ee2ddc902";
+
+$mysqli = new PDO($dsn);
 if ($mysqli->connect_error) {
     header("Location: ../error.php?err=Unable to connect to MySQL");
     exit();
 }
+
+?>
