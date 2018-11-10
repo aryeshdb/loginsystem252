@@ -38,15 +38,15 @@ include_once 'includes/functions.php';
             $names = 5;
             while($names != 0) {
                 $b = "$x";
-                $sql_u = "SELECT * FROM members WHERE username='$username$b'";
-                #$sql_e = "SELECT * FROM users WHERE email='$email'";
-                $res_u = mysqli_query($mysqli, $sql_u);
-                #$res_e = mysqli_query($db, $sql_e);
-
-                if (mysqli_num_rows($res_u) > 0) {
-                     $x++;
-                  }
-                else {    
+                $sql= "select * from members where username='".$username.$b."';";
+                $result=$mysqli->query($sql);
+                $flag=0;
+                while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
+                        $x++;
+                        $flag=1;
+                        break;
+                }
+                if($flag==0) {    
                     echo "Suggested username: $username$b <br>";
                     $names--;
                     $x++;

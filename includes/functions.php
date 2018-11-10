@@ -80,13 +80,13 @@ function login($email, $password, $mysqli) {
         else {
                 // Password is not correct 
                 // We record this attempt in the database 
-                // $now = time();
-                // if (!$mysqli->query("INSERT INTO login_attempts(user_id, time) 
-                //                 VALUES ('$user_id', '$now')")) {
-                //     header("Location: ../error.php?err=Database error: login_attempts");
-                //     exit();
-                // }
-                // return false;
+                $now = time();
+                if (!$mysqli->query("INSERT INTO login_attempts(user_id, time) 
+                                VALUES ('".$user_id."', '".$now."')")) {
+                    header("Location: ../error.php?err=Database error: login_attempts");
+                    exit();
+                }
+                return false;
         }
     }
     else{ 

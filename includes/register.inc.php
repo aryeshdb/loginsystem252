@@ -44,37 +44,49 @@ if (isset($_POST['username'], $_POST['email'], $_POST['p'])) {
     // This should should be adequate as nobody gains any advantage from
     // breaking these rules.
     //
-    
-    $prep_stmt = "SELECT id FROM members WHERE email = ? LIMIT 1";
-    $stmt = $mysqli->prepare($prep_stmt);
-    
-    if ($stmt) {
-        $stmt->bind_param('s', $email);
-        $stmt->execute();
-        $stmt->store_result();
-        
-        if ($stmt->num_rows == 1) {
-            // A user with this email address already exists
+    $sql= "select id from members where email='".$email."';";
+    $result=$mysqli->query($sql);
+    while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
             $error_msg .= '<p class="error">A user with this email address already exists.</p>';
-        }
-    } else {
-        $error_msg .= '<p class="error">Database error</p>';
+            break;
     }
-    $prep_stmt = "SELECT id FROM members WHERE username = ? LIMIT 1";
-    $stmt = $mysqli->prepare($prep_stmt);
-
-    if ($stmt) {
-        $stmt->bind_param('s', $username);
-        $stmt->execute();
-        $stmt->store_result();
-        
-        if ($stmt->num_rows == 1) {
-            // A user with this username already exists
+    $sql= "select id from members where username='".$username."';";
+    $result=$mysqli->query($sql);
+    while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
             $error_msg .= '<p class="error">A user with this username already exists.</p>';
-        }
-    } else {
-        $error_msg .= '<p class="error">Database error</p>';
+            break;
     }
+
+    // $prep_stmt = "SELECT id FROM members WHERE email = ? LIMIT 1";
+    // $stmt = $mysqli->prepare($prep_stmt);
+    
+    // if ($stmt) {
+    //     $stmt->bind_param('s', $email);
+    //     $stmt->execute();
+    //     $stmt->store_result();
+        
+    //     if ($stmt->num_rows == 1) {
+    //         // A user with this email address already exists
+    //         $error_msg .= '<p class="error">A user with this email address already exists.</p>';
+    //     }
+    // } else {
+    //     $error_msg .= '<p class="error">Database error</p>';
+    // }
+    // $prep_stmt = "SELECT id FROM members WHERE username = ? LIMIT 1";
+    // $stmt = $mysqli->prepare($prep_stmt);
+
+    // if ($stmt) {
+    //     $stmt->bind_param('s', $username);
+    //     $stmt->execute();
+    //     $stmt->store_result();
+        
+    //     if ($stmt->num_rows == 1) {
+    //         // A user with this username already exists
+    //         $error_msg .= '<p class="error">A user with this username already exists.</p>';
+    //     }
+    // } else {
+    //     $error_msg .= '<p class="error">Database error</p>';
+    // }
     
     // TODO: 
     // We'll also have to account for the situation where the user doesn't have
@@ -89,14 +101,18 @@ if (isset($_POST['username'], $_POST['email'], $_POST['p'])) {
         $password = hash('sha512', $password . $random_salt);
         
         // Insert the new user into the database 
-        if ($insert_stmt = $mysqli->prepare("INSERT INTO members (username, email, password, salt) VALUES (?, ?, ?, ?)")) {
-            $insert_stmt->bind_param('ssss', $username, $email, $password, $random_salt);
-            // Execute the prepared query.
-            if (! $insert_stmt->execute()) {
-                header('Location: ../error.php?err=Registration failure: INSERT');
-                exit();
-            }
+        if (!$mysqli->query("INSERT INTO members (username, email, password, salt) VALUES ('".$user_id."','".$email."','".$password."','".$random_salt."')")) {
+                    header("Location: ../error.php?err=Database error: login_attempts");
+                    exit();
         }
+        // if ($insert_stmt = $mysqli->prepare("INSERT INTO members (username, email, password, salt) VALUES (?, ?, ?, ?)")) {
+        //     $insert_stmt->bind_param('ssss', $username, $email, $password, $random_salt);
+        //     // Execute the prepared query.
+        //     if (! $insert_stmt->execute()) {
+        //         header('Location: ../error.php?err=Registration failure: INSERT');
+        //         exit();
+        //     }
+        // }
         header('Location: ./register_success.php');
         exit();
     }
