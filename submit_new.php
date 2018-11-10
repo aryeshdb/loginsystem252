@@ -16,12 +16,10 @@ if(isset($_POST['password']) && $_POST['email'])
   // echo "{$email}  ";
    $sql= "SELECT * FROM members WHERE email='".$email."'";
    $select=$mysqli->query($sql); 
-   while($row=mysqli_fetch_array($select))
-    {
-      $random_salt=($row['salt']);
-      break;
-    }
-
+   while ($row = $select->fetch(\PDO::FETCH_ASSOC)) {
+            $random_salt=($row['salt']);
+            break;
+   }
   $pass=hash('sha512', $pass);
   
   $saltedpass = hash('sha512', $pass . $random_salt);

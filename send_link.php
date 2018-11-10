@@ -21,33 +21,28 @@ if(isset($_POST['submit_email']) && $_POST['email'])
     }
   
 
-    $sql= "SELECT * FROM members WHERE email='".$email."' ";
+    $sql= "SELECT * FROM members WHERE email='".$email."';";
      $select=$mysqli->query($sql);
-      // echo $select['email'];
 
-//   mysql_connect('localhost','root','');
-//   mysql_select_db('sample');
-  // if (login($email, $password, $mysqli) == true) {
-  //       // Login success 
-  //       header('Location: ./protected_page.php');
-  //   } else {
-  //       // Login failed 
-  //       header('Location: ./index.php?error=1');
-  //   }
-  if(mysqli_num_rows($select)>0)
+    $flag=0;
+    while ($row = $select->fetch(\PDO::FETCH_ASSOC)) {
+            $flag=1;
+            break;
+    }
+  if($flag==1)
   {
     
     // echo  $select;
-    while($row=mysqli_fetch_array($select))
-    {
-      $id=($row['id']);
+    while ($row = $select->fetch(\PDO::FETCH_ASSOC)) {
+            $id=($row['id']);
        $username=($row['username']);
       $email=($row['email']);
      
      
       $pass=($row['password']);
-     
+            break;
     }
+
     $link="<a href='localhost/reset_pass.php?key=".$email."&reset=".$pass."'>Click To Reset password</a>";
      
     require 'vendor/autoload.php';

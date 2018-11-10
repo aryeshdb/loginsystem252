@@ -44,7 +44,6 @@ function sec_session_start() {
 }
 
 function login($email, $password, $mysqli) {
-    echo "hi ";
     $sql= "select id,username,password,salt from members where email='".$email."';";
     $result=$mysqli->query($sql);
     $flag=0;

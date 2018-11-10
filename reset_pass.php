@@ -12,8 +12,13 @@ if($_GET['key'] && $_GET['reset'])
     exit();
   }
   $sql= "SELECT * FROM members WHERE email='".$email."' and password='".$pass."'";
-     $select=$mysqli->query($sql);   
-  if(mysqli_num_rows($select)==1)
+     $select=$mysqli->query($sql);
+     $flag=0;
+    while ($row = $select->fetch(\PDO::FETCH_ASSOC)) {
+            $flag=1;
+            break;
+    }   
+  if($flag==1)
   {
     // echo "\ntrue";
     ?>
