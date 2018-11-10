@@ -51,15 +51,11 @@ function login($email, $password, $mysqli) {
     $sql= "select * from members where email='test@example.com';";
 $result=$mysqli->query($sql);
     
-if (!$result) {
-  echo "An error occurred.\n";
-  exit;
-}
-
-while ($row = pg_fetch_row($result)) {
-  echo "Author: $row[0]  E-mail: $row[1]";
-  echo "<br />\n";
-}
+    foreach ($mysqli->rows() as $r) {
+        echo "hi ";
+        $a=$r['username'];
+        echo "{$a}";
+    }
 
 // if(pg_num_rows($sql)>0)
 //   {
