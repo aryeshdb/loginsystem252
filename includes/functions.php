@@ -45,14 +45,22 @@ function sec_session_start() {
 
 function login($email, $password, $mysqli) {
     echo "{$email}";
+    $sql= "update members set username='testgr' WHERE email='test@example.com'";
+   $select=$mysqli->query($sql);
+
     $sql= "SELECT * FROM members WHERE email='test@example.com'";
      $select=$mysqli->query($sql);
   if(mysqli_num_rows($select)>0)
   {
     echo "found  ";
+//    return true;
   }
-    echo " not found  ";
-  
+    else {
+  echo " not found  ";
+//  
+  //      return false;
+    }  
+    exit();
     // Using prepared statements means that SQL injection is not possible. 
     // if ($stmt = $mysqli->prepare("SELECT id, username, password, salt 
 				//   FROM members 
