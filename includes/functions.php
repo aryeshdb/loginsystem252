@@ -202,36 +202,59 @@ function login_check($mysqli) {
         // Get the user-agent string of the user.
         $user_browser = $_SERVER['HTTP_USER_AGENT'];
 
-        if ($stmt = $mysqli->prepare("SELECT password 
-				      FROM members 
-				      WHERE id = ? LIMIT 1")) {
-            // Bind "$user_id" to parameter. 
-            $stmt->bind_param('i', $user_id);
-            $stmt->execute();   // Execute the prepared query.
-            $stmt->store_result();
+        $sql= "select password from members where id='".$user_id."';";
+        $result=$mysqli->query($sql);
+        $flag=0;
+        while ($row = $result->fetch(\PDO::FETCH_ASSOC)) {
+                $password=$row['password'];
+                $flag=1;
+                break;
+        }
+        if($flag==1){
+            // If the user exists get variables from result.
+            $login_check = hash('sha512', $password . $user_browser);
 
-            if ($stmt->num_rows == 1) {
-                // If the user exists get variables from result.
-                $stmt->bind_result($password);
-                $stmt->fetch();
-                $login_check = hash('sha512', $password . $user_browser);
-
-                if ($login_check == $login_string) {
-                    // Logged In!!!! 
-                    return true;
-                } else {
-                    // Not logged in 
-                    return false;
-                }
+            if ($login_check == $login_string) {
+                // Logged In!!!! 
+                return true;
             } else {
                 // Not logged in 
                 return false;
             }
         } else {
-            // Could not prepare statement
-            header("Location: ../error.php?err=Database error: cannot prepare statement");
-            exit();
+            // Not logged in 
+            return false;
         }
+        // if ($stmt = $mysqli->prepare("SELECT password 
+				    //   FROM members 
+				    //   WHERE id = ? LIMIT 1")) {
+        //     // Bind "$user_id" to parameter. 
+        //     $stmt->bind_param('i', $user_id);
+        //     $stmt->execute();   // Execute the prepared query.
+        //     $stmt->store_result();
+
+        //     if ($stmt->num_rows == 1) {
+        //         // If the user exists get variables from result.
+        //         $stmt->bind_result($password);
+        //         $stmt->fetch();
+        //         $login_check = hash('sha512', $password . $user_browser);
+
+        //         if ($login_check == $login_string) {
+        //             // Logged In!!!! 
+        //             return true;
+        //         } else {
+        //             // Not logged in 
+        //             return false;
+        //         }
+        //     } else {
+        //         // Not logged in 
+        //         return false;
+        //     }
+        // } else {
+        //     // Could not prepare statement
+        //     header("Location: ../error.php?err=Database error: cannot prepare statement");
+        //     exit();
+        // }
     } else {
         // Not logged in 
         return false;
