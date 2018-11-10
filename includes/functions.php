@@ -50,7 +50,7 @@ function login($email, $password, $mysqli) {
 
     $sql= "select * from members where email='test@example.com';";
     echo "sql quey made";
-     $select=$mysqli->query($sql)or die(pg_last_error();
+     $select=$mysqli->query($sql)or die(pg_last_error());
     echo "sql quey made2";
      
      $count = pg_num_rows($select);
