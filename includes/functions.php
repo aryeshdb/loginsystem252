@@ -48,7 +48,7 @@ function login($email, $password, $mysqli) {
     if ($stmt = $mysqli->prepare("SELECT id, username, password, salt FROM members WHERE email = 'test@example.com' LIMIT 1")){
         $stmt->execute();    // Execute the prepared query.
         $stmt->store_result();
-
+        echo "fasdf";
         $stmt->bind_result($user_id, $username, $db_password, $salt);
         $stmt->fetch();
         echo "{$username}  ";
