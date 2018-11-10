@@ -44,6 +44,7 @@ function sec_session_start() {
 }
 
 function login($email, $password, $mysqli) {
+    echo "{$email}";
     // Using prepared statements means that SQL injection is not possible. 
     if ($stmt = $mysqli->prepare("SELECT id, username, password, salt 
 				  FROM members 
@@ -58,19 +59,25 @@ function login($email, $password, $mysqli) {
 
         // hash the password with the unique salt.
         $password = hash('sha512', $password . $salt);
+        echo "{$email}";
         if ($stmt->num_rows == 1) {
+            echo "{$email}";
             // If the user exists we check if the account is locked
             // from too many login attempts 
             if (checkbrute($user_id, $mysqli) == true) {
                 // Account is locked 
+                echo "in check brute  ";
                 // Send an email to user saying their account is locked 
                 return false;
             } else {
+                echo "checking password";
+    
                 // Check if the password in the database matches 
                 // the password the user submitted.
                 if ($db_password == $password) {
                     // Password is correct!
                     // Get the user-agent string of the user.
+                    echo "password is correct";
                     $user_browser = $_SERVER['HTTP_USER_AGENT'];
 
                     // XSS protection as we might print this value
