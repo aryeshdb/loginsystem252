@@ -50,6 +50,8 @@ function login($email, $password, $mysqli) {
 
     $sql= "select * from members where email='test@example.com'";
      $select=$mysqli->query($sql);
+     $count = pg_num_rows($select);
+     echo "{$count}";
   if(pg_num_rows($select)>0)
   {
     echo "found  ";
