@@ -61,6 +61,7 @@ function login($email, $password, $mysqli) {
 
     $sql= "select * from members WHERE email='test@example.com';";
     $result=$mysqli->query($sql);
+    echo "hi";
     echo "hi {$mysqli}";
     foreach ($mysqli->rows() as $r) {
         echo "hi ";
