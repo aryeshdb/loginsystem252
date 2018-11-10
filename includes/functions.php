@@ -49,11 +49,13 @@ function login($email, $password, $mysqli) {
    //$select=$mysqli->query($sql);
 
     $sql= pg_exec($mysqli,"select * from members where email='test@example.com';");
-    echo "sql quey made";
-     
-    $count = pg_num_rows($select);
+    echo pg_last_error($mysqli);
+
+    $count = pg_num_rows($sql);
+    echo pg_last_error($mysqli);
+    
      echo "count = {$count}";
-  if(pg_num_rows($select)>0)
+  if(pg_num_rows($sql)>0)
   {
     echo "found  ";
 //    return true;
