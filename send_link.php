@@ -43,7 +43,7 @@ if(isset($_POST['submit_email']) && $_POST['email'])
             break;
     }
 
-    $link="<a href='localhost/reset_pass.php?key=".$email."&reset=".$pass."'>Click To Reset password</a>";
+    $link="<a href='https://loginsystemcs252.herokuapp.com/reset_pass.php?key=".$email."&reset=".$pass."'>Click To Reset password</a>";
      
     require 'vendor/autoload.php';
     $mail = new PHPMailer(TRUE);
