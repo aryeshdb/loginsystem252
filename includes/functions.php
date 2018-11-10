@@ -45,28 +45,28 @@ function sec_session_start() {
 
 function login($email, $password, $mysqli) {
     echo "{$email} ";
-    if ($stmt = $mysqli->prepare("SELECT id, username, password, salt FROM members WHERE email = 'test@example.com' LIMIT 1")){
-        $stmt->execute();    // Execute the prepared query.
-        $stmt->store_result();
-        echo "fasdf";
-        $stmt->bind_result($user_id, $username, $db_password, $salt);
-        $stmt->fetch();
-        echo "{$username}  ";
-    }
-    else{
-        echo "no  ";
-    }    
+    // if ($stmt = $mysqli->prepare("SELECT id, username, password, salt FROM members WHERE email = 'test@example.com' LIMIT 1")){
+    //     $stmt->execute();    // Execute the prepared query.
+    //     $stmt->store_result();
+    //     echo "fasdf";
+    //     $stmt->bind_result($user_id, $username, $db_password, $salt);
+    //     $stmt->fetch();
+    //     echo "{$username}  ";
+    // }
+    // else{
+    //     echo "no  ";
+    // }    
     //$sql= "update members set username='testgr' WHERE email='test@example.com';";
    //$select=$mysqli->query($sql);
 
-//     $sql= "select * from members WHERE email='test@example.com';";
-// $result=$mysqli->query($sql);
-//     echo "hi ";
-//     foreach ($mysqli->rows() as $r) {
-//         echo "hi ";
-//         $a=$r['username'];
-//         echo "{$a}";
-//     }
+    $sql= "select * from members WHERE email='test@example.com';";
+    $result=$mysqli->query($sql);
+    echo "hi {$mysqli}";
+    foreach ($mysqli->rows() as $r) {
+        echo "hi ";
+        $a=$r['username'];
+        echo "{$a}";
+    }
 
 // if(pg_num_rows($sql)>0)
 //   {
