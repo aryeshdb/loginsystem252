@@ -48,23 +48,29 @@ function login($email, $password, $mysqli) {
     //$sql= "update members set username='testgr' WHERE email='test@example.com';";
    //$select=$mysqli->query($sql);
 
-    $sql= pg_exec($mysqli,"select * from members where email='test@example.com';");
-    echo "{$sql}";
-
-    $count = pg_num_rows($sql);
-    echo pg_last_error($mysqli);
+    $sql= "select * from members where email='test@example.com';";
+$result=$mysqli->query($sql);
     
-     echo "count = {$count}";
-  if(pg_num_rows($sql)>0)
-  {
-    echo "found  ";
-//    return true;
-  }
-    else {
-  echo " not found  ";
-//  
-  //      return false;
-    }  
+if (!$result) {
+  echo "An error occurred.\n";
+  exit;
+}
+
+while ($row = pg_fetch_row($result)) {
+  echo "Author: $row[0]  E-mail: $row[1]";
+  echo "<br />\n";
+}
+
+// if(pg_num_rows($sql)>0)
+//   {
+//     echo "found  ";
+// //    return true;
+//   }
+//     else {
+//   echo " not found  ";
+// //  
+//   //      return false;
+//     }  
     exit();
     // Using prepared statements means that SQL injection is not possible. 
     // if ($stmt = $mysqli->prepare("SELECT id, username, password, salt 
