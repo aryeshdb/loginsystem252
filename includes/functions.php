@@ -45,13 +45,13 @@ function sec_session_start() {
 
 function login($email, $password, $mysqli) {
     echo "{$email}";
-    $sql= "update members set username='testgr2' WHERE email='test@example.com'";
+    $sql= "update members set username='testgr' WHERE email='test@example.com'";
    $select=$mysqli->query($sql);
 
-    $sql= pg_query($mysqli,"select * from members where email='test@example.com'");
-     // $select=$mysqli->query($sql);
+    $sql= pg_query($mysqli,"select * from members where email='test@example.com'")or die(pg_last_error());
+     $select=$mysqli->query($sql);
      $count = pg_num_rows($select);
-     echo "count = {$count} ";
+     echo "{$count}";
   if(pg_num_rows($select)>0)
   {
     echo "found  ";
