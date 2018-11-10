@@ -56,44 +56,42 @@ function login($email, $password, $mysqli) {
             $flag=1;
             break;
     }
-    if($flag==1){
-        $password = hash('sha512', $password . $db_salt);
-        echo "checking password";
+    // if($flag==1){
+    //     $password = hash('sha512', $password . $db_salt);
+    //     echo "checking password";
     
-        // Check if the password in the database matches 
-        // the password the user submitted.
-        if ($db_password == $password) {
-            echo "password is correct";
-            $user_browser = $_SERVER['HTTP_USER_AGENT'];
-            $user_id = preg_replace("/[^0-9]+/", "", $user_id);
-            $_SESSION['user_id'] = $user_id;
+    //     // Check if the password in the database matches 
+    //     // the password the user submitted.
+    //     if ($db_password == $password) {
+    //         echo "password is correct";
+    //         $user_browser = $_SERVER['HTTP_USER_AGENT'];
+    //         $user_id = preg_replace("/[^0-9]+/", "", $user_id);
+    //         $_SESSION['user_id'] = $user_id;
 
-            // XSS protection as we might print this value
-            $username = preg_replace("/[^a-zA-Z0-9_\-]+/", "", $username);
+    //         // XSS protection as we might print this value
+    //         $username = preg_replace("/[^a-zA-Z0-9_\-]+/", "", $username);
 
-            $_SESSION['username'] = $username;
-            $_SESSION['login_string'] = hash('sha512', $password . $user_browser);
+    //         $_SESSION['username'] = $username;
+    //         $_SESSION['login_string'] = hash('sha512', $password . $user_browser);
 
-            // Login successful. 
-            return true;
-        }
-        else {
-                // Password is not correct 
-                // We record this attempt in the database 
-                $now = time();
-                if (!$mysqli->query("INSERT INTO login_attempts(user_id, time) 
-                                VALUES ('$user_id', '$now')")) {
-                    header("Location: ../error.php?err=Database error: login_attempts");
-                    exit();
-                }
-                return false;
-        }
-    }
-    else{ 
-        return false;
-    }
-
-    exit();
+    //         // Login successful. 
+    //         return true;
+    //     }
+    //     else {
+    //             // Password is not correct 
+    //             // We record this attempt in the database 
+    //             $now = time();
+    //             if (!$mysqli->query("INSERT INTO login_attempts(user_id, time) 
+    //                             VALUES ('$user_id', '$now')")) {
+    //                 header("Location: ../error.php?err=Database error: login_attempts");
+    //                 exit();
+    //             }
+    //             return false;
+    //     }
+    // }
+    // else{ 
+    //     return false;
+    // }
     // Using prepared statements means that SQL injection is not possible. 
     // if ($stmt = $mysqli->prepare("SELECT id, username, password, salt 
 				//   FROM members 
